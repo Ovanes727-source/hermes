@@ -8,7 +8,7 @@ workflows:
         JAVA_HOME: /Users/aksel/Documents/jdk-17.0.17+10
       flutter: stable  # Если проект Flutter, можно убрать, если чистый Android
       android:
-        gradle_version: 7.6  # Можно указать нужную версию Gradle
+        gradle_version: 7.6 
     scripts:
       - name: Show Java version
         script: |
