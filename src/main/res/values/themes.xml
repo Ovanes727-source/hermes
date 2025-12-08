@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base Hermes Theme -->
+    <style name="Theme.Hermes" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/cyber_gold</item>
+        <item name="colorPrimaryVariant">@color/cyber_gold_dark</item>
+        <item name="colorOnPrimary">@color/obsidian_black</item>
+        
+        <item name="colorSecondary">@color/neon_blue</item>
+        <item name="colorSecondaryVariant">@color/neon_blue_dark</item>
+        <item name="colorOnSecondary">@color/obsidian_black</item>
+        
+        <item name="colorTertiary">@color/neon_purple</item>
+        <item name="colorOnTertiary">@color/marble_white</item>
+        
+        <item name="android:colorBackground">@color/obsidian_black</item>
+        <item name="colorOnBackground">@color/marble_white</item>
+        
+        <item name="colorSurface">@color/card_background</item>
+        <item name="colorOnSurface">@color/marble_white</item>
+        
+        <item name="colorError">@color/error_red</item>
+        <item name="colorOnError">@color/obsidian_black</item>
+        
+        <item name="android:statusBarColor">@color/obsidian_black</item>
+        <item name="android:navigationBarColor">@color/obsidian_black</item>
+        
+        <item name="android:windowBackground">@color/obsidian_black</item>
+        
+        <item name="materialCardViewStyle">@style/Widget.Hermes.CardView</item>
+        <item name="materialButtonStyle">@style/Widget.Hermes.Button</item>
+        <item name="switchStyle">@style/Widget.Hermes.Switch</item>
+    </style>
+
+    <!-- Splash Theme -->
+    <style name="Theme.Hermes.Splash" parent="Theme.Hermes">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+    <!-- Card View Style -->
+    <style name="Widget.Hermes.CardView" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/card_background</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="strokeColor">@color/neon_blue</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Button Style -->
+    <style name="Widget.Hermes.Button" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/obsidian_black</item>
+        <item name="backgroundTint">@color/cyber_gold</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- Outlined Button Style -->
+    <style name="Widget.Hermes.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/cyber_gold</item>
+        <item name="strokeColor">@color/cyber_gold</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- Switch Style -->
+    <style name="Widget.Hermes.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbTint">@color/cyber_gold</item>
+        <item name="trackTint">@color/neon_purple</item>
+    </style>
+
+    <!-- Text Appearances -->
+    <style name="TextAppearance.Hermes.Headline" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/cinzel</item>
+        <item name="android:textColor">@color/cyber_gold</item>
+    </style>
+
+    <style name="TextAppearance.Hermes.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/orbitron</item>
+        <item name="android:textColor">@color/neon_blue</item>
+    </style>
+
+    <style name="TextAppearance.Hermes.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/rajdhani</item>
+        <item name="android:textColor">@color/marble_white</item>
+    </style>
+
+    <style name="TextAppearance.Hermes.Label" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/rajdhani</item>
+        <item name="android:textColor">@color/hologram_teal</item>
+    </style>
+
+</resources>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Left Wing -->
+    <path
+        android:pathData="M100,100 Q60,80 40,40 Q30,60 35,90 Q40,110 60,120 Q80,130 100,125"
+        android:strokeWidth="3"
+        android:strokeColor="#00FFFF"
+        android:fillColor="#1A00FFFF" />
+
+    <path
+        android:pathData="M100,100 Q65,85 50,55 Q45,70 48,95 Q52,115 70,122 Q85,128 100,125"
+        android:strokeWidth="2"
+        android:strokeColor="#9D00FF"
+        android:fillColor="@android:color/transparent" />
+
+    <path
+        android:pathData="M100,100 Q70,90 60,70 Q58,82 60,100 Q65,115 80,120"
+        android:strokeWidth="1.5"
+        android:strokeColor="#FFD700"
+        android:fillColor="@android:color/transparent" />
+
+    <!-- Right Wing -->
+    <path
+        android:pathData="M100,100 Q140,80 160,40 Q170,60 165,90 Q160,110 140,120 Q120,130 100,125"
+        android:strokeWidth="3"
+        android:strokeColor="#00FFFF"
+        android:fillColor="#1A00FFFF" />
+
+    <path
+        android:pathData="M100,100 Q135,85 150,55 Q155,70 152,95 Q148,115 130,122 Q115,128 100,125"
+        android:strokeWidth="2"
+        android:strokeColor="#9D00FF"
+        android:fillColor="@android:color/transparent" />
+
+    <path
+        android:pathData="M100,100 Q130,90 140,70 Q142,82 140,100 Q135,115 120,120"
+        android:strokeWidth="1.5"
+        android:strokeColor="#FFD700"
+        android:fillColor="@android:color/transparent" />
+
+    <!-- Center Orb -->
+    <path
+        android:pathData="M100,100 m-15,0 a15,15 0,1 1,30 0 a15,15 0,1 1,-30 0"
+        android:fillColor="#FFD700"
+        android:strokeWidth="2"
+        android:strokeColor="#00FFFF" />
+
+    <path
+        android:pathData="M100,100 m-10,0 a10,10 0,1 1,20 0 a10,10 0,1 1,-20 0"
+        android:fillColor="#9D00FF" />
+
+    <path
+        android:pathData="M100,100 m-5,0 a5,5 0,1 1,10 0 a5,5 0,1 1,-10 0"
+        android:fillColor="#00FFFF" />
+
+    <!-- Wing Tips Glow Left -->
+    <path
+        android:pathData="M40,40 L35,30 M45,50 L38,42 M50,60 L42,55"
+        android:strokeWidth="2"
+        android:strokeColor="#FFD700"
+        android:strokeLineCap="round" />
+
+    <!-- Wing Tips Glow Right -->
+    <path
+        android:pathData="M160,40 L165,30 M155,50 L162,42 M150,60 L158,55"
+        android:strokeWidth="2"
+        android:strokeColor="#FFD700"
+        android:strokeLineCap="round" />
+
+    <!-- Electric Sparks Left -->
+    <path
+        android:pathData="M55,85 L48,80 L52,78 L45,73"
+        android:strokeWidth="1"
+        android:strokeColor="#00FFFF"
+        android:strokeLineCap="round" />
+
+    <!-- Electric Sparks Right -->
+    <path
+        android:pathData="M145,85 L152,80 L148,78 L155,73"
+        android:strokeWidth="1"
+        android:strokeColor="#00FFFF"
+        android:strokeLineCap="round" />
+
+</vector>

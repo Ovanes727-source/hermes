@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_marble_neon"
+    tools:context=".MainActivity">
+
+    <!-- Top Status Bar -->
+    <LinearLayout
+        android:id="@+id/layoutStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_ready"
+            android:textColor="@color/cyber_gold"
+            android:textSize="16sp"
+            android:fontFamily="@font/orbitron" />
+
+        <View
+            android:id="@+id/animationIndicator"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/indicator_pulse"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <!-- Settings Button -->
+    <ImageButton
+        android:id="@+id/btnSettings"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_settings"
+        android:background="@drawable/button_icon_cyber"
+        android:contentDescription="@string/settings_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- App Title -->
+    <TextView
+        android:id="@+id/tvAppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/cyber_gold"
+        android:textSize="36sp"
+        android:fontFamily="@font/cinzel"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/layoutStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_subtitle"
+        android:textColor="@color/hologram_teal"
+        android:textSize="14sp"
+        android:fontFamily="@font/rajdhani"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Hermes Wings Logo -->
+    <ImageView
+        android:id="@+id/ivHermesWings"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_hermes_wings"
+        android:contentDescription="@string/hermes_logo"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        app:layout_constraintBottom_toTopOf="@id/layoutModes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Mode Selection -->
+    <LinearLayout
+        android:id="@+id/layoutModes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@id/btnStartTranslation">
+
+        <Button
+            android:id="@+id/btnModeGame"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="@string/mode_game"
+            android:textColor="@color/marble_white"
+            android:textSize="12sp"
+            android:background="@drawable/button_mode_game"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/btnModeMovie"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="@string/mode_movie"
+            android:textColor="@color/marble_white"
+            android:textSize="12sp"
+            android:background="@drawable/button_mode_movie"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/btnModeStream"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="@string/mode_stream"
+            android:textColor="@color/marble_white"
+            android:textSize="12sp"
+            android:background="@drawable/button_mode_stream"
+            style="?android:attr/borderlessButtonStyle" />
+
+        <Button
+            android:id="@+id/btnModeFast"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="@string/mode_fast"
+            android:textColor="@color/marble_white"
+            android:textSize="12sp"
+            android:background="@drawable/button_mode_fast"
+            style="?android:attr/borderlessButtonStyle" />
+
+    </LinearLayout>
+
+    <!-- Start/Stop Button -->
+    <Button
+        android:id="@+id/btnStartTranslation"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="48dp"
+        android:text="@string/start_translation"
+        android:textColor="@color/obsidian_black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/orbitron"
+        android:background="@drawable/button_cyber_antique"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

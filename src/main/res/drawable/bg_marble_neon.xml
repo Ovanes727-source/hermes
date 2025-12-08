@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base obsidian background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/obsidian_black" />
+        </shape>
+    </item>
+
+    <!-- Gradient overlay from top -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#40000000"
+                android:centerColor="#00000000"
+                android:endColor="#60000000" />
+        </shape>
+    </item>
+
+    <!-- Subtle marble texture simulation -->
+    <item android:top="0dp" android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="400dp"
+                android:centerX="0.3"
+                android:centerY="0.2"
+                android:startColor="#0AFFFFFF"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- Neon glow effect from bottom -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="90"
+                android:startColor="#209D00FF"
+                android:centerColor="#0000FFFF"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+    <!-- Corner accent glow -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="300dp"
+                android:centerX="0.9"
+                android:centerY="0.1"
+                android:startColor="#15FFD700"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+
+</layer-list>

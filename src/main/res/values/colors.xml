@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Cyber Antique Palette -->
+    <color name="cyber_gold">#FFD700</color>
+    <color name="cyber_gold_dark">#B8860B</color>
+    <color name="cyber_gold_light">#FFE55C</color>
+    
+    <color name="neon_blue">#00FFFF</color>
+    <color name="neon_blue_dark">#00BFBF</color>
+    <color name="neon_blue_light">#7FFFFF</color>
+    
+    <color name="neon_purple">#9D00FF</color>
+    <color name="neon_purple_dark">#7700CC</color>
+    <color name="neon_purple_light">#C77DFF</color>
+    
+    <color name="hologram_teal">#20F0E0</color>
+    <color name="hologram_teal_dark">#15A89E</color>
+    
+    <color name="circuit_orange">#FF6B00</color>
+    <color name="circuit_orange_dark">#CC5500</color>
+    
+    <!-- Background Colors -->
+    <color name="obsidian_black">#0A0A0A</color>
+    <color name="obsidian_gray">#1A1A1A</color>
+    <color name="marble_white">#F0F0F0</color>
+    <color name="marble_gray">#D0D0D0</color>
+    
+    <!-- Card and Surface Colors -->
+    <color name="card_background">#1A1A2E</color>
+    <color name="card_background_elevated">#252540</color>
+    <color name="surface_dark">#0F0F1A</color>
+    
+    <!-- State Colors -->
+    <color name="success_green">#00FF88</color>
+    <color name="error_red">#FF4444</color>
+    <color name="warning_yellow">#FFAA00</color>
+    
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#9D00FF</color>
+    <color name="gradient_center">#00FFFF</color>
+    <color name="gradient_end">#FFD700</color>
+    
+    <!-- Transparency -->
+    <color name="black_80">#CC000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_10">#1AFFFFFF</color>
+    
+    <!-- Mode Button Colors -->
+    <color name="mode_game">#00FF88</color>
+    <color name="mode_movie">#00BFFF</color>
+    <color name="mode_stream">#9D00FF</color>
+    <color name="mode_fast">#FF6B00</color>
+</resources>

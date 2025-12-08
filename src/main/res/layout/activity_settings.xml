@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/obsidian_black">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/obsidian_black">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/toolbar_cyber"
+            app:titleTextColor="@color/cyber_gold"
+            app:navigationIconTint="@color/cyber_gold" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Audio Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_audio"
+                android:textColor="@color/neon_blue"
+                android:textSize="18sp"
+                android:fontFamily="@font/orbitron"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/neon_blue"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/audio_sensitivity"
+                        android:textColor="@color/marble_white"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp">
+
+                        <SeekBar
+                            android:id="@+id/seekBarSensitivity"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="100"
+                            android:progress="50"
+                            android:progressTint="@color/neon_blue"
+                            android:thumbTint="@color/cyber_gold" />
+
+                        <TextView
+                            android:id="@+id/tvSensitivityValue"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sensitivity_medium"
+                            android:textColor="@color/hologram_teal"
+                            android:textAlignment="textEnd"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchOfflineMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/offline_mode"
+                        android:textColor="@color/marble_white"
+                        app:thumbTint="@color/cyber_gold"
+                        app:trackTint="@color/neon_purple" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Speech Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_speech"
+                android:textColor="@color/neon_purple"
+                android:textSize="18sp"
+                android:fontFamily="@font/orbitron"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/neon_purple"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/source_language"
+                        android:textColor="@color/marble_white"
+                        android:textSize="14sp" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupSourceLang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <RadioButton
+                            android:id="@+id/radioSourceEnglish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="EN"
+                            android:textColor="@color/marble_white"
+                            android:buttonTint="@color/neon_purple" />
+
+                        <RadioButton
+                            android:id="@+id/radioSourceJapanese"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="JA"
+                            android:textColor="@color/marble_white"
+                            android:buttonTint="@color/neon_purple" />
+
+                        <RadioButton
+                            android:id="@+id/radioSourceKorean"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="KO"
+                            android:textColor="@color/marble_white"
+                            android:buttonTint="@color/neon_purple" />
+
+                        <RadioButton
+                            android:id="@+id/radioSourceAuto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AUTO"
+                            android:textColor="@color/marble_white"
+                            android:buttonTint="@color/neon_purple" />
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/voice_type"
+                        android:textColor="@color/marble_white"
+                        android:textSize="14sp"
+                        android:layout_marginTop="16dp" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupVoice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp">
+
+                        <RadioButton
+                            android:id="@+id/radioVoiceHermes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/voice_hermes"
+                            android:textColor="@color/marble_white"
+                            android:buttonTint="@color/cyber_gold" />
+
+                        <RadioButton
+                            android:id="@+id/radioVoiceAthena"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/voice_athena"
+                            android:textColor="@color/marble_white"
+                            android:buttonTint="@color/cyber_gold" />
+
+                        <RadioButton
+                            android:id="@+id/radioVoiceCyber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/voice_cyber"
+                            android:textColor="@color/marble_white"
+                            android:buttonTint="@color/cyber_gold" />
+
+                    </RadioGroup>
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchTtsEnabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/tts_enabled"
+                        android:textColor="@color/marble_white"
+                        app:thumbTint="@color/cyber_gold"
+                        app:trackTint="@color/neon_purple" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tts_speed"
+                        android:textColor="@color/marble_white"
+                        android:textSize="14sp"
+                        android:layout_marginTop="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp">
+
+                        <SeekBar
+                            android:id="@+id/seekBarTtsSpeed"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="100"
+                            android:progress="50"
+                            android:progressTint="@color/neon_purple"
+                            android:thumbTint="@color/cyber_gold" />
+
+                        <TextView
+                            android:id="@+id/tvSpeedValue"
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:text="1.0x"
+                            android:textColor="@color/hologram_teal"
+                            android:textAlignment="textEnd"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Interface Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_interface"
+                android:textColor="@color/cyber_gold"
+                android:textSize="18sp"
+                android:fontFamily="@font/orbitron"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/cyber_gold"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchShowOriginal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_original"
+                        android:textColor="@color/marble_white"
+                        app:thumbTint="@color/cyber_gold"
+                        app:trackTint="@color/neon_blue" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/overlay_opacity"
+                        android:textColor="@color/marble_white"
+                        android:textSize="14sp"
+                        android:layout_marginTop="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp">
+
+                        <SeekBar
+                            android:id="@+id/seekBarOverlayOpacity"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="100"
+                            android:progress="80"
+                            android:progressTint="@color/cyber_gold"
+                            android:thumbTint="@color/neon_blue" />
+
+                        <TextView
+                            android:id="@+id/tvOpacityValue"
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:text="80%"
+                            android:textColor="@color/hologram_teal"
+                            android:textAlignment="textEnd"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- System Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_system"
+                android:textColor="@color/circuit_orange"
+                android:textSize="18sp"
+                android:fontFamily="@font/orbitron"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/circuit_orange"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchAutoStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/auto_start"
+                        android:textColor="@color/marble_white"
+                        app:thumbTint="@color/circuit_orange"
+                        app:trackTint="@color/neon_purple" />
+
+                    <Button
+                        android:id="@+id/btnDownloadModels"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/download_models"
+                        android:textColor="@color/obsidian_black"
+                        android:background="@drawable/button_download" />
+
+                    <Button
+                        android:id="@+id/btnClearCache"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/clear_cache"
+                        android:textColor="@color/marble_white"
+                        android:background="@drawable/button_outline" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

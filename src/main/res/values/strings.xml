@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Info -->
+    <string name="app_name">ГЕРМЕС</string>
+    <string name="app_subtitle">Переводчик реального времени</string>
+    <string name="hermes_logo">Крылья Гермеса</string>
+    
+    <!-- Main Screen -->
+    <string name="start_translation">НАЧАТЬ ПЕРЕВОД</string>
+    <string name="stop_translation">ОСТАНОВИТЬ</string>
+    <string name="translation_started">Перевод запущен. Откройте игру или видео.</string>
+    <string name="translation_stopped">Перевод остановлен</string>
+    
+    <!-- Status Messages -->
+    <string name="status_ready">Готов к работе</string>
+    <string name="status_translating">Перевод активен</string>
+    <string name="status_need_permissions">Требуются разрешения</string>
+    <string name="status_error">Ошибка</string>
+    
+    <!-- Translation Modes -->
+    <string name="mode_game">ИГРА</string>
+    <string name="mode_movie">ФИЛЬМ</string>
+    <string name="mode_stream">СТРИМ</string>
+    <string name="mode_fast">БЫСТРЫЙ</string>
+    <string name="mode_selected">Выбран режим: %1$s</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">Настройки Гермеса</string>
+    <string name="settings_audio">АУДИО</string>
+    <string name="settings_speech">РЕЧЬ</string>
+    <string name="settings_interface">ИНТЕРФЕЙС</string>
+    <string name="settings_system">СИСТЕМА</string>
+    
+    <!-- Audio Settings -->
+    <string name="audio_sensitivity">Чувствительность микрофона</string>
+    <string name="sensitivity_low">Низкая</string>
+    <string name="sensitivity_medium">Средняя</string>
+    <string name="sensitivity_high">Высокая</string>
+    <string name="offline_mode">Оффлайн режим</string>
+    <string name="offline_mode_hint">Скачайте модели для работы без интернета</string>
+    
+    <!-- Speech Settings -->
+    <string name="source_language">Язык распознавания</string>
+    <string name="voice_type">Голос озвучки</string>
+    <string name="voice_hermes">Гермес (мужской)</string>
+    <string name="voice_athena">Афина (женский)</string>
+    <string name="voice_cyber">Киборг (нейтральный)</string>
+    <string name="tts_enabled">Озвучивать перевод</string>
+    <string name="tts_speed">Скорость речи</string>
+    
+    <!-- Interface Settings -->
+    <string name="show_original">Показывать оригинал</string>
+    <string name="overlay_opacity">Прозрачность субтитров</string>
+    
+    <!-- System Settings -->
+    <string name="auto_start">Автозапуск при загрузке</string>
+    <string name="download_models">Скачать модели</string>
+    <string name="downloading_models">Загрузка моделей&#8230;</string>
+    <string name="clear_cache">Очистить кэш</string>
+    <string name="cache_cleared">Кэш очищен</string>
+    
+    <!-- Permissions -->
+    <string name="permission_audio_title">Разрешение на запись аудио</string>
+    <string name="permission_audio_rationale">Гермес использует микрофон для захвата звука игр и видео для перевода.</string>
+    <string name="permission_overlay_title">Разрешение на отображение поверх приложений</string>
+    <string name="permission_overlay_rationale">Разрешите отображение субтитров поверх других приложений для удобного просмотра перевода.</string>
+    <string name="grant">Разрешить</string>
+    <string name="cancel">Отмена</string>
+    <string name="open_settings">Открыть настройки</string>
+    <string name="permission_granted">Разрешение получено</string>
+    <string name="permission_denied">Разрешение не получено. Функция недоступна.</string>
+    <string name="overlay_permission_granted">Разрешение на overlay получено</string>
+    
+    <!-- Notifications -->
+    <string name="channel_translation_name">Перевод</string>
+    <string name="channel_translation_description">Уведомления о работе переводчика</string>
+    <string name="channel_audio_name">Захват аудио</string>
+    <string name="channel_audio_description">Уведомления о захвате звука</string>
+    <string name="notification_title">Гермес активен</string>
+    <string name="notification_text">Перевод работает в фоновом режиме</string>
+    <string name="stop">Остановить</string>
+    <string name="audio_capture_title">Захват аудио</string>
+    <string name="audio_capture_text">Гермес слушает звук&#8230;</string>
+</resources>
