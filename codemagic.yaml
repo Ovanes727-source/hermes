@@ -9,7 +9,7 @@ workflows:
     scripts:
       - name: Show Java version
         script: |
-          $JAVA_HOME/bin/java -version
+          java -version
       - name: Assemble Release APK
         script: |
           ./gradlew assembleRelease
