@@ -1,4 +1,3 @@
----
 workflows:
   android-release:
     name: Hermes Translator Android Release
@@ -9,6 +8,12 @@ workflows:
       - name: Show Java version
         script: |
           java -version
+      
+      # ← ДОБАВЬТЕ ЭТОТ ШАГ ПЕРЕД СБОРКОЙ ↓
+      - name: Fix gradlew permissions
+        script: |
+          chmod +x ./gradlew
+      
       - name: Assemble Release APK
         script: |
           ./gradlew assembleRelease
@@ -17,4 +22,4 @@ workflows:
     publishing:
       email:
         recipients:
-          - your-email@example.com  # сюда придёт уведомление о сборке и ссылка на APK
+          - your-email@example.com  # замените на ваш email
