@@ -1,18 +1,24 @@
-cat > codemagic.yaml << 'EOF'
-# For more options, see https://docs.codemagic.io/yaml/yaml-getting-started/
-
+---
 workflows:
-  sample-workflow:
-    name: Sample Workflow
-    max_build_duration: 120
-    instance_type: mac_mini
+  android-release:
+    name: Android Release Workflow
+    max_build_duration: 60
     environment:
-      groups: []
       vars:
-        MY_ENV_VAR: "some value"
+        JAVA_HOME: /Users/aksel/Documents/jdk-17.0.17+10
+      flutter: stable  # Если проект Flutter, можно убрать, если чистый Android
+      android:
+        gradle_version: 7.6  # Можно указать нужную версию Gradle
     scripts:
-      - name: Hello world
-        script: echo "Hello world!"
+      - name: Show Java version
+        script: |
+          $JAVA_HOME/bin/java -version
+      - name: Assemble Release APK
+        script: |
+          ./gradlew assembleRelease
     artifacts:
-      - "**/*.apk"
-EOF
+      - build/app/outputs/**/*.apk  # путь к APK, можно скорректировать под проект
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com  # Если хочешь получать билд по email
