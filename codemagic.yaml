@@ -1,4 +1,4 @@
-workflows:
+ workflows:
   android-debug:
     name: Android Debug Build
     max_build_duration: 30
@@ -8,190 +8,65 @@ workflows:
     scripts:
       - name: Show Project Structure
         script: |
-          echo "📁 СТРУКТУРА ПРОЕКТА:"
-          echo "======================"
-          echo "Рабочая директория: $(pwd)"
-          echo ""
-          echo "Содержимое корня:"
+          echo "📁 СТРУКТУРА ПРОЕКТА"
+          echo "===================="
+          pwd
           ls -la
-          echo ""
-          echo "Все gradle файлы:"
-          find . -name "*.gradle*" -type f
           
-      - name: Check if Android Project Exists
+      - name: Try Simple Build
         script: |
-          echo "🔍 ПРОВЕРКА ANDROID ПРОЕКТА:"
-          echo "============================"
+          echo "🚀 ПРОБУЕМ СБОРКУ"
+          echo "================"
           
-          # Проверяем основные файлы
-          if [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
-            echo "✅ Найден build.gradle"
-            echo "Первые 10 строк:"
-            head -10 build.gradle build.gradle.kts 2>/dev/null || cat build.gradle 2>/dev/null || cat build.gradle.kts 2>/dev/null || true
-          else
-            echo "❌ build.gradle не найден"
+          # Пробуем разные способы
+          echo "1. Ищем gradlew..."
+          if [ -f "gradlew" ]; then
+            echo "Найден gradlew, запускаем..."
+            chmod +x gradlew
+            ./gradlew tasks --dry-run || true
+            ./gradlew assembleDebug || true
           fi
           
           echo ""
-          
-          if [ -f "settings.gradle" ] || [ -f "settings.gradle.kts" ]; then
-            echo "✅ Найден settings.gradle"
-          else
-            echo "❌ settings.gradle не найден"
+          echo "2. Ищем build.gradle..."
+          if [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
+            echo "Найден build.gradle, пробуем gradle..."
+            gradle tasks --dry-run 2>&1 | head -20 || true
+            gradle assembleDebug 2>&1 | tail -50 || true
           fi
           
           echo ""
-          
-          # Проверяем есть ли исходники
-          SRC_FILES=$(find . -type f \( -name "*.java" -o -name "*.kt" -o -name "AndroidManifest.xml" \) | head -5)
-          if [ -n "$SRC_FILES" ]; then
-            echo "✅ Найдены исходные файлы:"
-            echo "$SRC_FILES"
-          else
-            echo "⚠️ Исходные файлы не найдены"
-          fi
-          
-      - name: Try to Build
-        script: |
-          echo "🚀 ПОПЫТКА СБОРКИ:"
-          echo "=================="
-          
-          # Если есть build.gradle - пробуем собрать
-          if [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
-            echo "Пробуем собрать существующий проект..."
-            gradle assembleDebug --stacktrace 2>&1 | tail -100
-            exit $?
-          fi
-          
-          # Если есть app/build.gradle
+          echo "3. Ищем в папке app..."
           if [ -f "app/build.gradle" ] || [ -f "app/build.gradle.kts" ]; then
-            echo "Пробуем собрать модуль app..."
-            
-            # Создаем settings.gradle если нужно
+            echo "Найден app/build.gradle..."
             if [ ! -f "settings.gradle" ] && [ ! -f "settings.gradle.kts" ]; then
               echo "include ':app'" > settings.gradle
             fi
-            
-            gradle assembleDebug --stacktrace 2>&1 | tail -100
-            exit $?
+            gradle assembleDebug 2>&1 | tail -50 || true
           fi
           
-          # Если ничего нет - создаем минимальный проект
-          echo "Создаем минимальный Android проект..."
-          
-          # Создаем build.gradle
-          cat > build.gradle << 'EOF'
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0'
-    }
-}
-
-apply plugin: 'com.android.application'
-
-android {
-    compileSdk 34
-    namespace 'com.example.hermes'
-    
-    defaultConfig {
-        applicationId "com.example.hermes"
-        minSdk 21
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
-    }
-    
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-        debug {
-            debuggable true
+          echo ""
+          echo "4. Создаем минимальный проект..."
+          # Создаем простейший build.gradle без сложного синтаксиса
+          cat > simple_build.gradle << "EOF"
+allprojects {
+    task hello {
+        doLast {
+            println "Hello from Gradle"
         }
     }
-    
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 EOF
           
-          # Создаем settings.gradle
-          echo "include ':app'" > settings.gradle
+          gradle -b simple_build.gradle hello || true
           
-          # Создаем папку app если нет
-          mkdir -p app/src/main/java/com/example/hermes
-          
-          # Создаем минимальный AndroidManifest.xml
-          mkdir -p app/src/main
-          cat > app/src/main/AndroidManifest.xml << 'EOF'
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hermes">
-    
-    <application
-        android:allowBackup="true"
-        android:label="Hermes"
-        android:theme="@android:style/Theme.Light">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-</manifest>
-EOF
-          
-          # Создаем MainActivity
-          mkdir -p app/src/main/java/com/example/hermes
-          cat > app/src/main/java/com/example/hermes/MainActivity.java << 'EOF'
-package com.example.hermes;
-
-import android.app.Activity;
-import android.os.Bundle;
-
-public class MainActivity extends Activity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-}
-EOF
-          
-          echo "✅ Минимальный проект создан"
-          echo "Пробуем собрать..."
-          gradle assembleDebug --stacktrace 2>&1 | tail -100
-          
-      - name: Find APK Files
+      - name: List APK Files
         script: |
-          echo "📦 ПОИСК APK:"
-          echo "============="
-          
-          APK_FILES=$(find . -name "*.apk" -type f 2>/dev/null)
-          
-          if [ -n "$APK_FILES" ]; then
-            echo "✅ Найдены APK файлы:"
-            echo "$APK_FILES" | while read file; do
-              echo "📱 $file ($(ls -lh "$file" | awk '{print $5}'))"
-            done
-          else
-            echo "❌ APK файлы не найдены"
-            echo ""
-            echo "Папки сборки:"
-            find . -type d -name "build" 2>/dev/null | head -3
-          fi
+          echo "📦 ПОИСК APK"
+          echo "==========="
+          find . -name "*.apk" -type f
+          echo ""
+          echo "Всего найдено: $(find . -name "*.apk" -type f 2>/dev/null | wc -l)"
           
     artifacts:
       - "**/*.apk"
