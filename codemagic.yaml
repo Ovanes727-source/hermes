@@ -6,58 +6,36 @@ workflows:
       vars:
         PACKAGE_NAME: "com.example.hermes"
     scripts:
-      - name: Generate Gradle Wrapper
+      - name: Setup and Build with Gradle
         script: |
-          echo "🔧 Создаем Gradle Wrapper..."
+          echo "🔧 Настройка окружения..."
           
-          # Проверяем есть ли gradle
-          if command -v gradle &> /dev/null; then
-            echo "✅ Gradle найден в системе"
-            
-            # Создаем wrapper если его нет
-            if [ ! -f "./gradlew" ]; then
-              echo "📦 Создаем gradle wrapper..."
-              gradle wrapper --gradle-version 8.5
-              
-              # Проверяем что создалось
-              if [ -f "./gradlew" ]; then
-                chmod +x ./gradlew
-                echo "✅ Gradle Wrapper создан"
-                ./gradlew --version
-              else
-                echo "❌ Не удалось создать gradle wrapper"
-                # Пробуем вручную создать структуру
-                mkdir -p gradle/wrapper
-                cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
-distributionBase=GRADLE_USER_HOME
-distributionPath=wrapper/dists
-distributionUrl=https\://services.gradle.org/distributions/gradle-8.5-bin.zip
-zipStoreBase=GRADLE_USER_HOME
-zipStorePath=wrapper/dists
-EOF
-                echo "✅ gradle-wrapper.properties создан"
-              fi
-            else
-              echo "✅ Gradle Wrapper уже существует"
-              chmod +x ./gradlew
-            fi
-          else
-            echo "❌ Gradle не установлен в системе"
-            exit 1
-          fi
+          # Проверяем доступные версии Gradle
+          echo "Доступные версии Gradle:"
+          gradle --version || true
           
-      - name: Build with Wrapper
-        script: |
-          echo "🚀 Собираем проект..."
+          # Проверяем структуру проекта
+          echo "📁 Структура проекта:"
+          ls -la
+          echo ""
+          echo "📁 Содержимое корневой папки:"
+          find . -maxdepth 2 -type f -name "*.gradle*" | head -20
           
-          if [ -f "./gradlew" ]; then
-            ./gradlew assembleDebug --stacktrace --info
-          elif [ -f "gradlew" ]; then
-            chmod +x gradlew
-            ./gradlew assembleDebug --stacktrace --info
-          else
-            echo "❌ Gradle Wrapper не найден, используем системный gradle"
+          echo "🚀 Собираем проект используя Gradle..."
+          
+          # Пробуем разные команды Gradle
+          if [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
+            echo "📦 Найден файл build.gradle, используем gradle команду..."
             gradle assembleDebug --stacktrace --info
+          elif [ -f "app/build.gradle" ] || [ -f "app/build.gradle.kts" ]; then
+            echo "📦 Найден app/build.gradle, собираем из корня..."
+            cd app
+            gradle assembleDebug --stacktrace --info
+          else
+            echo "❌ Не найден build.gradle файл!"
+            echo "Ищем все gradle файлы:"
+            find . -name "*.gradle*" -type f
+            exit 1
           fi
           
           if [ $? -eq 0 ]; then
@@ -67,26 +45,27 @@ EOF
             exit 1
           fi
           
-      - name: Collect Artifacts
+      - name: Find Artifacts
         script: |
-          echo "📦 Собираем артефакты..."
+          echo "🔍 Ищем созданные APK файлы..."
           
-          APK_COUNT=$(find . -name "*.apk" -type f 2>/dev/null | wc -l)
-          echo "Найдено APK файлов: $APK_COUNT"
+          # Ищем во всех возможных местах
+          find . -name "*.apk" -type f 2>/dev/null | while read apk; do
+            echo "✅ Найден: $apk"
+            ls -lh "$apk"
+          done
           
-          if [ $APK_COUNT -eq 0 ]; then
-            echo "⚠️ APK не найдены! Структура build:"
-            find . -type d -name "build" | while read dir; do
-              echo "📂 $dir:"
-              find "$dir" -type f | head -10
-            done
-          else
-            find . -name "*.apk" -type f | while read apk; do
-              echo "📱 $apk ($(ls -lh "$apk" | awk '{print $5}'))"
-            done
-          fi
+          # Показываем структуру build папок
+          echo ""
+          echo "📁 Папки сборки:"
+          find . -type d -name "build" | head -5 | while read dir; do
+            echo "📂 $dir:"
+            find "$dir" -name "*.apk" -type f | head -3
+          done
           
     artifacts:
+      - "**/build/outputs/apk/**/*.apk"
+      - "**/build/outputs/**/*.apk"
       - "**/*.apk"
       
     publishing:
