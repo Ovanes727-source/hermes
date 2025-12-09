@@ -2,27 +2,14 @@ workflows:
   android-debug:
     name: Android Build
     scripts:
-      - name: Create complete Gradle wrapper
+      - name: Build with system Gradle
         script: |
-          # Создаем папку если нет
-          mkdir -p gradle/wrapper
+          # Удаляем битые файлы
+          rm -f gradlew 2>/dev/null || true
+          rm -rf gradle/wrapper 2>/dev/null || true
           
-          # Скачиваем gradle-wrapper.jar
-          curl -L -o gradle/wrapper/gradle-wrapper.jar \
-            https://github.com/gradle/gradle/raw/v8.5/gradle/wrapper/gradle-wrapper.jar
-          
-          # Проверяем что скачалось
-          ls -la gradle/wrapper/
-          
-          # Используем системный gradle чтобы создать wrapper
-          gradle wrapper --gradle-version 8.5
-          
-          # Делаем gradlew исполняемым
-          chmod +x gradlew
-          
-      - name: Build
-        script: |
-          ./gradlew assembleDebug --stacktrace
+          # Используем системный Gradle
+          gradle assembleDebug --stacktrace --info
           
     artifacts:
       - app/build/outputs/apk/debug/*.apk
