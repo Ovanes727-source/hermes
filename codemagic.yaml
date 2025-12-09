@@ -1,75 +1,91 @@
 workflows:
-  android-release:
-    name: Android Build
-    max_build_duration: 60
+  android-debug:
+    name: Android Debug Build
+    max_build_duration: 30
     environment:
-      android_signing:
-        - your_keystore_here # Нужно настроить в AppCircle
-      groups:
-        - keystore_credentials
       vars:
         PACKAGE_NAME: "com.example.hermes" # Замени на твой package name
-        GRADLEW_PATH: "./gradlew"
     scripts:
-      - name: Set up environment
+      - name: Setup and Build
         script: |
+          echo "🔧 Настройка окружения..."
+          
           # Делаем gradlew исполняемым
-          if [ -f "$GRADLEW_PATH" ]; then
-            chmod +x "$GRADLEW_PATH"
+          if [ -f "./gradlew" ]; then
+            chmod +x ./gradlew
             echo "✅ gradlew сделан исполняемым"
           else
-            echo "❌ gradlew не найден по пути: $GRADLEW_PATH"
-            ls -la .
+            echo "❌ gradlew не найден!"
+            echo "Содержимое папки:"
+            ls -la
             exit 1
           fi
           
-          # Проверяем версию Java
+          # Проверяем Java
+          echo "Версия Java:"
           java -version
           
-      - name: Build APK
-        script: |
-          echo "🚀 Начинаем сборку APK..."
+          echo "🚀 Собираем Debug APK..."
           ./gradlew assembleDebug --stacktrace --info
           
-          # Проверяем результат
           if [ $? -eq 0 ]; then
-            echo "✅ APK успешно собран"
+            echo "✅ Сборка успешна!"
             
-            # Показываем где создались APK
-            find app/build/outputs -name "*.apk" -type f | while read file; do
-              echo "📦 Найден APK: $file"
-              ls -lh "$file"
-            done
-            
-            # Считаем количество APK
-            APK_COUNT=$(find app/build/outputs -name "*.apk" -type f | wc -l)
-            echo "📊 Всего APK создано: $APK_COUNT"
+            # Находим и показываем все APK
+            APK_FILES=$(find . -name "*.apk" -type f)
+            if [ -z "$APK_FILES" ]; then
+              echo "⚠️ APK файлы не найдены!"
+              echo "Ищем в app/build/outputs:"
+              find app/build/outputs -type f
+            else
+              echo "📦 Найдены APK файлы:"
+              echo "$APK_FILES" | while read file; do
+                echo "  - $file"
+                ls -lh "$file"
+              done
+            fi
           else
-            echo "❌ Ошибка при сборке APK"
+            echo "❌ Ошибка сборки!"
             exit 1
           fi
           
-      - name: Build Release AAB (optional)
+      - name: Verify Build
         script: |
-          echo "🚀 Начинаем сборку AAB..."
-          ./gradlew bundleRelease --stacktrace --info
+          echo "🔍 Проверяем результат сборки..."
           
-          # Проверяем результат
-          if [ $? -eq 0 ]; then
-            echo "✅ AAB успешно собран"
-            
-            # Показываем где создались AAB
-            find app/build/outputs -name "*.aab" -type f | while read file; do
-              echo "📦 Найден AAB: $file"
-              ls -lh "$file"
-            done
-          else
-            echo "⚠️ Не удалось собрать AAB (возможно, не настроена подпись)"
+          # Ищем APK в стандартных местах
+          APK_PATHS=(
+            "app/build/outputs/apk/debug"
+            "app/build/outputs/apk"
+            "app/build/outputs"
+            "build/outputs"
+          )
+          
+          for path in "${APK_PATHS[@]}"; do
+            if [ -d "$path" ]; then
+              echo "📁 Проверяем папку: $path"
+              find "$path" -name "*.apk" -type f | while read apk; do
+                echo "✅ Найден APK: $apk"
+                echo "   Размер: $(ls -lh "$apk" | awk '{print $5}')"
+                echo "   Дата: $(date -r "$apk")"
+              done
+            fi
+          done
+          
+          # Ищем во всем проекте
+          TOTAL_APKS=$(find . -name "*.apk" -type f | wc -l)
+          echo "📊 Всего APK файлов в проекте: $TOTAL_APKS"
+          
+          if [ $TOTAL_APKS -eq 0 ]; then
+            echo "⚠️ Внимание: APK файлы не найдены!"
+            echo "Структура папки app/build:"
+            find app/build -type d 2>/dev/null || echo "Папка app/build не существует"
           fi
           
     artifacts:
+      - app/build/outputs/apk/debug/*.apk
+      - app/build/outputs/apk/*.apk
       - app/build/outputs/**/*.apk
-      - app/build/outputs/**/*.aab
       
     publishing:
       email:
