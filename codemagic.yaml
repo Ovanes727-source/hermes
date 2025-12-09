@@ -1,15 +1,16 @@
 workflows:
   android-debug:
     name: Android Build
+    max_build_duration: 60
     scripts:
-      - name: Build with system Gradle
+      - name: Build without modifications
         script: |
-          # Удаляем битые файлы
-          rm -f gradlew 2>/dev/null || true
-          rm -rf gradle/wrapper 2>/dev/null || true
-          
-          # Используем системный Gradle
-          gradle assembleDebug --stacktrace --info
-          
+          echo "🚀 Сборка без изменений кода..."
+          echo "Используем системный Gradle..."
+          gradle assembleDebug --stacktrace
     artifacts:
-      - app/build/outputs/apk/debug/*.apk
+      - "**/*.apk"
+    publishing:
+      email:
+        recipients:
+          - ovanes727@icloud.com
