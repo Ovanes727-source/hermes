@@ -9,18 +9,63 @@ workflows:
         - keystore_credentials
       vars:
         PACKAGE_NAME: "com.example.hermes" # Замени на твой package name
+        GRADLEW_PATH: "./gradlew"
     scripts:
       - name: Set up environment
         script: |
-          chmod +x ./gradlew 2>/dev/null || true
+          # Делаем gradlew исполняемым
+          if [ -f "$GRADLEW_PATH" ]; then
+            chmod +x "$GRADLEW_PATH"
+            echo "✅ gradlew сделан исполняемым"
+          else
+            echo "❌ gradlew не найден по пути: $GRADLEW_PATH"
+            ls -la .
+            exit 1
+          fi
+          
+          # Проверяем версию Java
+          java -version
           
       - name: Build APK
         script: |
-          ./gradlew assembleDebug
+          echo "🚀 Начинаем сборку APK..."
+          ./gradlew assembleDebug --stacktrace --info
+          
+          # Проверяем результат
+          if [ $? -eq 0 ]; then
+            echo "✅ APK успешно собран"
+            
+            # Показываем где создались APK
+            find app/build/outputs -name "*.apk" -type f | while read file; do
+              echo "📦 Найден APK: $file"
+              ls -lh "$file"
+            done
+            
+            # Считаем количество APK
+            APK_COUNT=$(find app/build/outputs -name "*.apk" -type f | wc -l)
+            echo "📊 Всего APK создано: $APK_COUNT"
+          else
+            echo "❌ Ошибка при сборке APK"
+            exit 1
+          fi
           
       - name: Build Release AAB (optional)
         script: |
-          ./gradlew bundleRelease
+          echo "🚀 Начинаем сборку AAB..."
+          ./gradlew bundleRelease --stacktrace --info
+          
+          # Проверяем результат
+          if [ $? -eq 0 ]; then
+            echo "✅ AAB успешно собран"
+            
+            # Показываем где создались AAB
+            find app/build/outputs -name "*.aab" -type f | while read file; do
+              echo "📦 Найден AAB: $file"
+              ls -lh "$file"
+            done
+          else
+            echo "⚠️ Не удалось собрать AAB (возможно, не настроена подпись)"
+          fi
           
     artifacts:
       - app/build/outputs/**/*.apk
