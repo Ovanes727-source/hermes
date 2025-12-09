@@ -1,76 +1,11 @@
- workflows:
-  android-debug:
-    name: Android Debug Build
-    max_build_duration: 30
-    environment:
-      vars:
-        PACKAGE_NAME: "com.example.hermes"
+workflows:
+  apk-only:
+    name: APK Search
     scripts:
-      - name: Show Project Structure
-        script: |
-          echo "📁 СТРУКТУРА ПРОЕКТА"
-          echo "===================="
-          pwd
-          ls -la
-          
-      - name: Try Simple Build
-        script: |
-          echo "🚀 ПРОБУЕМ СБОРКУ"
-          echo "================"
-          
-          # Пробуем разные способы
-          echo "1. Ищем gradlew..."
-          if [ -f "gradlew" ]; then
-            echo "Найден gradlew, запускаем..."
-            chmod +x gradlew
-            ./gradlew tasks --dry-run || true
-            ./gradlew assembleDebug || true
-          fi
-          
-          echo ""
-          echo "2. Ищем build.gradle..."
-          if [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
-            echo "Найден build.gradle, пробуем gradle..."
-            gradle tasks --dry-run 2>&1 | head -20 || true
-            gradle assembleDebug 2>&1 | tail -50 || true
-          fi
-          
-          echo ""
-          echo "3. Ищем в папке app..."
-          if [ -f "app/build.gradle" ] || [ -f "app/build.gradle.kts" ]; then
-            echo "Найден app/build.gradle..."
-            if [ ! -f "settings.gradle" ] && [ ! -f "settings.gradle.kts" ]; then
-              echo "include ':app'" > settings.gradle
-            fi
-            gradle assembleDebug 2>&1 | tail -50 || true
-          fi
-          
-          echo ""
-          echo "4. Создаем минимальный проект..."
-          # Создаем простейший build.gradle без сложного синтаксиса
-          cat > simple_build.gradle << "EOF"
-allprojects {
-    task hello {
-        doLast {
-            println "Hello from Gradle"
-        }
-    }
-}
-EOF
-          
-          gradle -b simple_build.gradle hello || true
-          
-      - name: List APK Files
-        script: |
-          echo "📦 ПОИСК APK"
-          echo "==========="
-          find . -name "*.apk" -type f
-          echo ""
-          echo "Всего найдено: $(find . -name "*.apk" -type f 2>/dev/null | wc -l)"
-          
+      - name: Find APK
+        script: find . -name "*.apk" -type f
     artifacts:
       - "**/*.apk"
-      
     publishing:
       email:
         recipients:
