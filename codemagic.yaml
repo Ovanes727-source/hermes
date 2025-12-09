@@ -3,15 +3,30 @@ workflows:
     name: Android Build
     max_build_duration: 60
     environment:
-      java: 17
+      android_signing:
+        - your_keystore_here # Нужно настроить в AppCircle
+      groups:
+        - keystore_credentials
+      vars:
+        PACKAGE_NAME: "com.example.hermes" # Замени на твой package name
     scripts:
-      - name: Quick Build Fix
+      - name: Set up environment
         script: |
-          # 1. Дать права на gradlew (если есть)
           chmod +x ./gradlew 2>/dev/null || true
           
-          # 2. Собрать ОБЫЧНУЮ (не релизную) версию
-          ./gradlew assembleDebug 2>&1 | head -30
+      - name: Build APK
+        script: |
+          ./gradlew assembleDebug
           
-          # 3. Если сработало - попробовать релиз
-          ./gradlew assembleRelease 2>&1 | head -50
+      - name: Build Release AAB (optional)
+        script: |
+          ./gradlew bundleRelease
+          
+    artifacts:
+      - app/build/outputs/**/*.apk
+      - app/build/outputs/**/*.aab
+      
+    publishing:
+      email:
+        recipients:
+          - ovanes727@icloud.com
