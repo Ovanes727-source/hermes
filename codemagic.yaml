@@ -1,19 +1,61 @@
 workflows:
   android-debug:
     name: Android Build
+    max_build_duration: 60
     scripts:
-      - name: Find task name
+      - name: Find correct build task
         script: |
-          echo "📋 ВСЕ ДОСТУПНЫЕ ЗАДАЧИ:"
-          gradle tasks --all 2>&1 | grep -i "assemble\|build" | head -20
+          echo "🔍 Ищем правильную задачу сборки..."
           
-      - name: Try common tasks
+          # Показываем ВСЕ задачи
+          echo "Все задачи Gradle:"
+          gradle tasks --all 2>&1 | grep -E "(assemble|build|compile|package)" | head -30
+          
+          echo ""
+          echo "Пробуем разные варианты:"
+          
+          echo "1. :app:assemble..."
+          gradle :app:assemble --stacktrace 2>&1 | tail -20 || true
+          
+          echo ""
+          echo "2. :app:build..."
+          gradle :app:build --stacktrace 2>&1 | tail -20 || true
+          
+          echo ""
+          echo "3. assemble..."
+          gradle assemble --stacktrace 2>&1 | tail -20 || true
+          
+          echo ""
+          echo "4. build..."
+          gradle build --stacktrace 2>&1 | tail -20 || true
+          
+      - name: Build with correct task
         script: |
-          # Пробуем самые частые варианты
-          gradle :app:assembleDebug 2>&1 | tail -20 || \
-          gradle assemble 2>&1 | tail -20 || \
-          gradle build 2>&1 | tail -20 || \
+          echo "🚀 Основная сборка..."
+          # Пробуем собрать релиз если дебаг не работает
+          gradle :app:assemble --stacktrace || \
+          gradle :app:build --stacktrace || \
+          gradle assemble --stacktrace || \
           echo "❌ Не удалось найти задачу сборки"
+          
+      - name: Search results
+        script: |
+          echo "🔍 Результаты поиска APK:"
+          find . -type f -name "*.apk" 2>/dev/null
+          
+          echo ""
+          echo "📁 Содержимое app/build:"
+          ls -la app/build/ 2>/dev/null || echo "Папка app/build не найдена"
+          
+          echo ""
+          echo "📁 Содержимое app/build/outputs:"
+          find app/build/outputs -type f 2>/dev/null | head -20 || true
           
     artifacts:
       - "**/*.apk"
+      - "app/build/outputs/**/*"
+      
+    publishing:
+      email:
+        recipients:
+          - ovanes727@icloud.com
