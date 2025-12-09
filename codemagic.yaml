@@ -1,25 +1,25 @@
 workflows:
-  android-build:  # ← ЭТО НАЗВАНИЕ ДОЛЖНО СОВПАДАТЬ С ТЕМ, ЧТО ТЫ ВЫБИРАЕШЬ В AppCircle
+  android-workflow:
     name: Android Build
     max_build_duration: 60
+    environment:
+      groups:
+        - keystore_credentials
+      vars:
+        PACKAGE_NAME: "com.example.hermes"
+    
     scripts:
-      - name: Make gradlew executable
+      - name: Set executable permissions
         script: |
-          echo "🔧 Делаем gradlew исполняемым..."
-          chmod +x gradlew
+          chmod +x ./gradlew
           
-      - name: Build APK
+      - name: Build debug APK
         script: |
-          echo "🚀 Собираем APK..."
-          ./gradlew assembleDebug --stacktrace
-          
-      - name: Find APK
-        script: |
-          echo "📦 Ищем APK файлы..."
-          find . -name "*.apk" -type f
+          ./gradlew assembleDebug
           
     artifacts:
-      - "**/*.apk"
+      - app/build/outputs/**/*.apk
+      - app/build/outputs/**/*.aab
       
     publishing:
       email:
