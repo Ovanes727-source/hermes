@@ -1,16 +1,19 @@
 workflows:
   android-debug:
     name: Android Build
-    max_build_duration: 60
     scripts:
-      - name: Build without modifications
+      - name: Find task name
         script: |
-          echo "🚀 Сборка без изменений кода..."
-          echo "Используем системный Gradle..."
-          gradle assembleDebug --stacktrace
+          echo "📋 ВСЕ ДОСТУПНЫЕ ЗАДАЧИ:"
+          gradle tasks --all 2>&1 | grep -i "assemble\|build" | head -20
+          
+      - name: Try common tasks
+        script: |
+          # Пробуем самые частые варианты
+          gradle :app:assembleDebug 2>&1 | tail -20 || \
+          gradle assemble 2>&1 | tail -20 || \
+          gradle build 2>&1 | tail -20 || \
+          echo "❌ Не удалось найти задачу сборки"
+          
     artifacts:
       - "**/*.apk"
-    publishing:
-      email:
-        recipients:
-          - ovanes727@icloud.com
