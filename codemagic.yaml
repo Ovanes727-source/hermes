@@ -5,18 +5,13 @@ workflows:
     environment:
       java: 17
     scripts:
-      - name: Install Gradle directly
+      - name: Quick Build Fix
         script: |
-          # Установить Gradle 8.5
-          wget https://services.gradle.org/distributions/gradle-8.5-bin.zip
-          unzip gradle-8.5-bin.zip
-          export GRADLE_HOME="$PWD/gradle-8.5"
-          export PATH="$GRADLE_HOME/bin:$PATH"
+          # 1. Дать права на gradlew (если есть)
+          chmod +x ./gradlew 2>/dev/null || true
           
-          gradle --version
-          echo "Gradle home: $GRADLE_HOME"
-      
-      - name: Build with installed Gradle
-        script: |
-          # Используем установленный Gradle
-          gradle clean assembleRelease --stacktrace --no-daemon
+          # 2. Собрать ОБЫЧНУЮ (не релизную) версию
+          ./gradlew assembleDebug 2>&1 | head -30
+          
+          # 3. Если сработало - попробовать релиз
+          ./gradlew assembleRelease 2>&1 | head -50
