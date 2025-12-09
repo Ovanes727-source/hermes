@@ -1,11 +1,38 @@
 workflows:
-  apk-only:
-    name: APK Search
+  android-build:
+    name: Android Build
+    max_build_duration: 60
     scripts:
-      - name: Find APK
-        script: find . -name "*.apk" -type f
+      - name: Make gradlew executable
+        script: |
+          echo "🔧 Делаем gradlew исполняемым..."
+          ls -la gradlew
+          chmod +x gradlew
+          ls -la gradlew
+          
+          echo "✅ Права на gradlew:"
+          stat gradlew | grep -i "access"
+          
+      - name: Build APK
+        script: |
+          echo "🚀 Запускаем сборку APK..."
+          ./gradlew assembleDebug --stacktrace
+          
+      - name: Find APK files
+        script: |
+          echo "🔍 Ищем собранные APK..."
+          find . -name "*.apk" -type f 2>/dev/null | while read file; do
+            echo "✅ Найден: $file"
+            ls -lh "$file"
+          done
+          
+          echo ""
+          echo "📊 Всего APK: $(find . -name "*.apk" -type f 2>/dev/null | wc -l)"
+          
     artifacts:
       - "**/*.apk"
+      - "app/build/outputs/**/*"
+      
     publishing:
       email:
         recipients:
