@@ -1,37 +1,25 @@
 workflows:
-  android-build:
+  android-build:  # ← ЭТО НАЗВАНИЕ ДОЛЖНО СОВПАДАТЬ С ТЕМ, ЧТО ТЫ ВЫБИРАЕШЬ В AppCircle
     name: Android Build
     max_build_duration: 60
     scripts:
       - name: Make gradlew executable
         script: |
           echo "🔧 Делаем gradlew исполняемым..."
-          ls -la gradlew
           chmod +x gradlew
-          ls -la gradlew
-          
-          echo "✅ Права на gradlew:"
-          stat gradlew | grep -i "access"
           
       - name: Build APK
         script: |
-          echo "🚀 Запускаем сборку APK..."
+          echo "🚀 Собираем APK..."
           ./gradlew assembleDebug --stacktrace
           
-      - name: Find APK files
+      - name: Find APK
         script: |
-          echo "🔍 Ищем собранные APK..."
-          find . -name "*.apk" -type f 2>/dev/null | while read file; do
-            echo "✅ Найден: $file"
-            ls -lh "$file"
-          done
-          
-          echo ""
-          echo "📊 Всего APK: $(find . -name "*.apk" -type f 2>/dev/null | wc -l)"
+          echo "📦 Ищем APK файлы..."
+          find . -name "*.apk" -type f
           
     artifacts:
       - "**/*.apk"
-      - "app/build/outputs/**/*"
       
     publishing:
       email:
